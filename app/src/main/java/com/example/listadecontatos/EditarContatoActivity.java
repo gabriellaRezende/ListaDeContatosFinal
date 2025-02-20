@@ -43,7 +43,7 @@ public class EditarContatoActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btnSalvar);
         btnVoltar = findViewById(R.id.btnVoltar);
         btnCriarGrupo = findViewById(R.id.btnCriarGrupo);
-        btnExcluir = findViewById(R.id.btnExcluir); //Botão de Exclusão
+        btnExcluir = findViewById(R.id.btnExcluirEditar); //Botão de Exclusão
 
         //Receber o contatoId da Intent
         Intent intent = getIntent();
