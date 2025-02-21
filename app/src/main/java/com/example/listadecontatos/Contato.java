@@ -18,7 +18,7 @@ public class Contato implements Parcelable {
     private String grupoNome;
 
 
-    public Contato(String name, String telemovel, String email, String grupoNome) {
+    public Contato(int id, String name, String telemovel, String email, int grupoId , String grupoNome) {
         this.id = id;
         this.name = name;
         this.telemovel = telemovel;

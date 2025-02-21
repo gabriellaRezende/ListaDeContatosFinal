@@ -167,5 +167,31 @@ public class DataBase extends SQLiteOpenHelper {
         db.delete(TABLE_CONTATOS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
+    //Buscar contato por ID
+    public Contato getContatoById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT c.id, c.nome, c.telemovel, c.email, c.grupo_id, g.nome_grupo " +
+                        "FROM " + TABLE_CONTATOS + " c " +
+                        "LEFT JOIN " + TABLE_GRUPOS + " g ON c.grupo_id = g.id " +
+                        "WHERE c.id = ?", new String[]{String.valueOf(id)});
+
+
+        if (cursor.moveToFirst()) { // Se encontrou o contato
+            Contato contato = new Contato();
+            contato.setId(cursor.getInt(0)); // Pega o ID
+            contato.setName(cursor.getString(1)); // Pega o nome
+            contato.setTelemovel(cursor.getString(2)); // Pega o telemóvel
+            contato.setEmail(cursor.getString(3)); // Pega o email
+            contato.setGrupoId(cursor.getInt(4)); // Pega o grupo ID
+            contato.setGrupoNome(cursor.getString(5)); // Pega o nome do grupo
+            cursor.close();
+            return contato; // Retorna o contato preenchido
+        }
+
+        cursor.close();
+        return null; // Retorna null se não encontrar o contato
+    }
+
 
 }

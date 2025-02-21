@@ -42,7 +42,7 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
         //Ação de clicar e abrir a tela de detalhar do contato
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), DetalhesContatoActivity.class);
-            intent.putExtra("contato", contato);
+            intent.putExtra("contatoId", contato.getId()); // Envia apenas o ID
             v.getContext().startActivity(intent);
         });
     }

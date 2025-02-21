@@ -1,8 +1,6 @@
 package com.example.listadecontatos;
 
 import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +18,7 @@ public class AddContatoActivity extends AppCompatActivity {
 
     private EditText edtNome, edtTelemovel, edtEmail;
     private Spinner spinnerGrupo;
-    private Button btnSalvar, btnVoltar, btnCriarGrupo, btnExcluir;
+    private Button btnSalvar, btnVoltar, btnCriarGrupo;
     private DataBase dbHelper;
     private Contato contatoAtual;
 
@@ -36,9 +34,15 @@ public class AddContatoActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         spinnerGrupo = findViewById(R.id.spinnerGrupo);
         btnSalvar = findViewById(R.id.btnSalvar);
+
+        if (btnSalvar != null) {
+            btnSalvar.setVisibility(View.VISIBLE);
+        }else {
+            Log.e("DEBUG", "Erro: btnSalvar não encontrado no layout!");
+        }
+
         btnVoltar = findViewById(R.id.btnVoltar);
         btnCriarGrupo = findViewById(R.id.btnCriarGrupo);
-        btnExcluir = findViewById(R.id.btnExcluir);
 
         //Carregar Grupos no Spinner
         carregarGrupos();
@@ -51,17 +55,6 @@ public class AddContatoActivity extends AppCompatActivity {
 
         //Botão para criar grupo
         btnCriarGrupo.setOnClickListener(v -> abrirModalCriarGrupo());
-
-        // Verifica se estamos editando um contato (recebendo um ID pela Intent)
-        if (getIntent().hasExtra("contato")) {
-            contatoAtual = (Contato) getIntent().getSerializableExtra("contato");
-            btnSalvar.setVisibility(View.VISIBLE);  // Exibe o botão de salvar
-            btnExcluir.setVisibility(View.VISIBLE); // Exibe o botão de excluir
-            carregarDadosParaEdicao();
-        } else {
-            btnSalvar.setVisibility(View.VISIBLE);  // Exibe o botão de salvar para novo contato
-            btnExcluir.setVisibility(View.GONE);    // Esconde o botão de excluir
-        }
 
     }
 

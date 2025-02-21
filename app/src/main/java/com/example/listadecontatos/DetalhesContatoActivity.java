@@ -21,11 +21,16 @@ public class DetalhesContatoActivity extends AppCompatActivity {
     private Chip chipGrupoDetalhes;
     private Button btnVoltarDetalhes, btnEditar;
     private Contato contato;
+    private DataBase dbHelper;
+    private int contatoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_contato);
+
+        //Inicializar banco de dados
+        dbHelper = new DataBase(this);
 
         //Referencias aos elementos da UI
         txtNome = findViewById(R.id.txtNome);
@@ -36,25 +41,14 @@ public class DetalhesContatoActivity extends AppCompatActivity {
         btnVoltarDetalhes = findViewById(R.id.btnVoltarDetalhes);
         btnEditar = findViewById(R.id.btnEditar);
 
-        //Obter o objeto Contato da Intent
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("contato")) {
-            contato = intent.getParcelableExtra("contato");
-
-            if (contato != null) {
-            //Preencher os campos com os dados do Contato
-            txtNome.setText(contato.getName());
-            txtTelemovel.setText(contato.getTelemovel());
-            txtEmail.setText(contato.getEmail());
-            chipGrupoDetalhes.setText(contato.getGrupoNome());
+        //Obter o ID do contato da Intent
+        contatoId = getIntent().getIntExtra("contatoId", -1);
+        if (contatoId != -1) {
+            carregarContato(); // Busca os dados no banco de dados
         } else {
-                Toast.makeText(this, "Erro ao carregar o contato", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        } else {
-                Toast.makeText(this, "Contato não encontrado", Toast.LENGTH_SHORT).show();
-                finish();
-            }
+            Toast.makeText(this, "Contato não encontrado", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         //Ação para ligar quando estiver no numero de telefone
         txtTelemovel.setOnClickListener(view -> {
@@ -69,17 +63,26 @@ public class DetalhesContatoActivity extends AppCompatActivity {
 
         //Ação de Editar
         btnEditar.setOnClickListener(v -> {
-            Intent intentEditar = new Intent(DetalhesContatoActivity.this, AddContatoActivity.class);
-
-            //Passa os dados do contato para a tela de edição
-            intent.putExtra("id", contato.getId());
-            intent.putExtra("nome", contato.getName());
-            intent.putExtra("telemovel", contato.getTelemovel());
-            intent.putExtra("email", contato.getEmail());
-            intent.putExtra("grupo", contato.getGrupoNome());
-
+            Intent intentEditar = new Intent(DetalhesContatoActivity.this, EditarContatoActivity.class);
+            intentEditar.putExtra("contatoId", contato.getId()); // Envia o ID do contato para a tela de edição
             startActivity(intentEditar);
         });
+    }
+
+    //Metodo para carregar os dados do contato no formulário
+    private void carregarContato() {
+        contato = dbHelper.getContatoById(contatoId);
+
+        if (contato != null) {
+            txtNome.setText(contato.getName());
+            txtTelemovel.setText(contato.getTelemovel());
+            txtEmail.setText(contato.getEmail());
+            chipGrupoDetalhes.setText(contato.getGrupoNome());
+        } else {
+            Toast.makeText(this, "Erro ao carregar o contato.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
     }
 
 }
