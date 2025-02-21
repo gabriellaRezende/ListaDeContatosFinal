@@ -96,7 +96,8 @@ public class EditarContatoActivity extends AppCompatActivity {
             int linhasAfetadas = dbHelper.updateContato(contatoId, nome, telemovel, email, grupoId);
 
             if (linhasAfetadas > 0) {
-                Toast.makeText(this, "Contato atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Contato atualizado com sucesso!", Toast.LENGTH_SHORT).show();Intent intent = new Intent(EditarContatoActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish(); //Fechar a atividade após salvar
             } else {
                 Toast.makeText(this, "Erro ao atualizar contato.", Toast.LENGTH_SHORT).show();
@@ -120,6 +121,8 @@ public class EditarContatoActivity extends AppCompatActivity {
     private void excluirContato() {
         dbHelper.deleteContato(contatoId);
         Toast.makeText(this, "Contato excluído com sucesso!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(EditarContatoActivity.this, MainActivity.class);
+        startActivity(intent);
         finish(); //Fechar a atividade após excluir
     }
 
