@@ -12,6 +12,8 @@
     <color name="purple_800">#4527A0</color>
     <color name="purple_900">#311B92</color>
     <color name="blueGrey_50">#ECEFF1</color>
+    <color name="blueGrey_300">#90A4AE</color>
+    <color name="blueGrey_100">#CFD8DC</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="green_600">#43A047</color>
     <color name="red_600">#E53935</color>

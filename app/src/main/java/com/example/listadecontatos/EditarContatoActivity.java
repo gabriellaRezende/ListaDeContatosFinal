@@ -103,7 +103,7 @@ public class EditarContatoActivity extends AppCompatActivity {
                 Toast.makeText(this, "Erro ao atualizar contato.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "Nome e telefone são obrigatórios!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nome e Nº Telemóvel são obrigatórios!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -132,7 +132,6 @@ public class EditarContatoActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_grupo, null);
         builder.setView(dialogView);
-        builder.setTitle("Criar Grupo");
 
         EditText edtNomeGrupo = dialogView.findViewById(R.id.edtNomeGrupo);
         Button btnCancelarGrupo = dialogView.findViewById(R.id.btnCancelarGrupo);
